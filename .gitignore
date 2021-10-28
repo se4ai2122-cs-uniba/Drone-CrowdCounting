@@ -2,3 +2,4 @@ venv
 *.exe
 .idea
 /src/dataset/VisDrone2020-CC
+/dataset
