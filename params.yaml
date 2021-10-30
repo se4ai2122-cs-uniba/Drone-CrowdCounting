@@ -1,6 +1,10 @@
 global:
   DATA_PATH: '../dataset/VisDrone2020-CC'
-  SIZE: (540, 960)
+  SIZE: !!python/tuple [540, 960]
+
+prepare:
+  GAMMA: 3
+  FILENAME_LEN: 5
 
 train:
   TRAIN_BATCH_SIZE: 4
