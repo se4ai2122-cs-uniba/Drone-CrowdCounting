@@ -13,6 +13,7 @@ import transformations as trans
 
 cfg_data = EasyDict()
 
+cfg_data.DATA_PATH = '../dataset/VisDrone2020-CC'
 cfg_data.SIZE = (1080, 1920)
 cfg_data.FILE_EXTENSION = '.jpg'
 cfg_data.GT_FILE_EXTENSION = '.h5'
@@ -137,7 +138,7 @@ def load_train_val():
     # train_df = make_dataframe('../dataset/VisDrone2020-CC/train')
     # valid_df = make_dataframe('../dataset/VisDrone2020-CC/val')
 
-    df = make_dataframe('../dataset/VisDrone2020-CC/train')
+    df = make_dataframe(os.path.join(cfg_data.DATA_PATH, 'train'))
     # Split the dataframe in train and validation
     train_df, valid_df = sklearn.model_selection.train_test_split(
         df, test_size=cfg.VAL_SIZE, shuffle=True
