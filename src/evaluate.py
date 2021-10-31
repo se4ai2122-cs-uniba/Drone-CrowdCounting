@@ -111,10 +111,11 @@ if __name__ == '__main__':
         cfg.PRE_TRAINED = eval_params['model']['PRETRAINED']
         cfg.N_WORKERS = eval_params['N_WORKERS']
         cfg.TEST_BATCH_SIZE = eval_params['BATCH_SIZE']
-        cfg.DF_PATH = global_params['DATA_PATH']
+        cfg.DF_PATH = global_params['DATA_TEST_PATH']
         cfg.DEVICE = eval_params['DEVICE']
         cfg.OUT_PREDICTIONS = eval_params['OUT_PREDICTIONS']
         cfg.LOSSES = eval_params['LOSSES']
+        cfg.SIZE = global_params['SIZE']
 
         actual_losses = cfg.LOSSES
 

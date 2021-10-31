@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+#<<<<<<< HEAD
 evaluate:
   BATCH_SIZE: 6
   N_WORKERS: 4
@@ -10,16 +10,14 @@ evaluate:
     GPU: 1
     NET: 'MobileCount'
 global:
-  DATA_PATH: '../dataset/VisDrone2020-CC/test'
+  DATA_TEST_PATH: '../dataset/VisDrone2020-CC/test'
+  DATA_PATH: '../dataset/VisDrone2020-CC'
+  SIZE: !!python/tuple [540, 960]
   DATA_TEST:
     TRAIN: False
     GT_TRANSFORM: False
 
-=======
-global:
-  DATA_PATH: '../dataset/VisDrone2020-CC'
-  SIZE: !!python/tuple [540, 960]
-
+#=======
 prepare:
   GAMMA: 3
   FILENAME_LEN: 5
@@ -62,4 +60,4 @@ train:
   VAL_SIZE: 0.2
   VAL_DENSE_START: 1
   VAL_FREQ: 10  # Before __C.VAL_DENSE_START epoches, the freq is set as __C.VAL_FREQ
->>>>>>> 1d4f93e507d32de37c0ab3ba81c2c52daeff42f2
+#>>>>>>> 1d4f93e507d32de37c0ab3ba81c2c52daeff42f2
