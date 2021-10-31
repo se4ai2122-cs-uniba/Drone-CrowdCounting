@@ -34,6 +34,8 @@ __C.LR_DECAY_START = 0  # when training epoch is more than it, the learning rate
 __C.NUM_EPOCH_LR_DECAY = 1  # decay frequency
 __C.MAX_EPOCH = 500
 
+__C.MOMENTUM = 0.95
+
 __C.OPTIM_ADAM = ('Adam',
                   {
                       'lr': __C.LR,
@@ -43,7 +45,7 @@ __C.OPTIM_SGD = ('SGD',
                   {
                       'lr': __C.LR,
                       'weight_decay': __C.W_DECAY,
-                      'momentum': 0.95
+                      'momentum': __C.MOMENTUM
                   })
 
 __C.OPTIM = __C.OPTIM_ADAM  # Chosen optimizer
