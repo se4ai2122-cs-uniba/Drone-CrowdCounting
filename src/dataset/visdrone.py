@@ -122,8 +122,8 @@ def load_test():
     Create a VisDroneDataset object in test mode
     @return: the visdrone testset
     """
-    df = make_dataframe('../dataset/VisDrone2020-CC/test')
-    ds = VisDroneDataset(df, train=False, gt_transform=False)
+    df = make_dataframe(cfg.DF_PATH)
+    ds = VisDroneDataset(df, train=cfg.TRAIN, gt_transform=cfg.GT_TRANSFORM)
     return ds
 
 

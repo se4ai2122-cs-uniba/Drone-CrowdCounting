@@ -1,9 +1,16 @@
-stages:
-  evaluate:
-    model_function: 'MobileCount'
-    data_function:
-    bs: 6
-    n_workers: 2
-    losses:
-    device:
-    out_prediction: None
+evaluate:
+  BATCH_SIZE: 6
+  N_WORKERS: 4
+  LOSSES: [ 'rmse', 'mae' ]
+  DEVICE: cpu
+  OUT_PREDICTIONS: None
+  model:
+    PRETRAINED: '../exp/05-27_18-12_VisDrone_MobileCount_0.0001__1080x1920/all_ep_16_mae_9.8_rmse_12.8.pth'
+    GPU: 1
+    NET: 'MobileCount'
+global:
+  DATA_PATH: '../dataset/VisDrone2020-CC/test'
+  DATA_TEST:
+    TRAIN: False
+    GT_TRANSFORM: False
+

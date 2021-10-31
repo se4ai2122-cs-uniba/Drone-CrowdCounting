@@ -2,7 +2,17 @@ import torch
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 import os
+from ruamel.yaml import YAML
 from pathlib import Path
+from sklearn.metrics import mean_squared_error, mean_absolute_error
+from dataset.visdrone import load_test
+from main import load_CC_test
+from config import cfg
+
+losses_dict = {
+    'rmse': lambda x, y: mean_squared_error(x, y, squared=False),
+    'mae': mean_absolute_error
+    }
 
 def test_model(
         model,
@@ -86,3 +96,28 @@ def evaluate_model(model_function, data_function, bs, n_workers, losses, device=
         results[loss] = losses[loss](y_pred, y_true)
 
     return results
+
+
+if __name__ == '__main__':
+
+    params_path = Path("../params.yaml")
+    with open(params_path, 'r') as params_file:
+        yaml = YAML()
+        params = yaml.load(params_file)
+
+        eval_params = params['evaluate']
+        global_params = params['global']
+        cfg.NET, cfg.GPU = eval_params['model']['NET'], eval_params['model']['GPU']
+        cfg.PRE_TRAINED = eval_params['model']['PRETRAINED']
+        cfg.N_WORKERS = eval_params['N_WORKERS']
+        cfg.TEST_BATCH_SIZE = eval_params['BATCH_SIZE']
+        cfg.DF_PATH = global_params['DATA_PATH']
+        cfg.DEVICE = eval_params['DEVICE']
+        cfg.OUT_PREDICTIONS = eval_params['OUT_PREDICTIONS']
+        cfg.LOSSES = eval_params['LOSSES']
+
+        actual_losses = cfg.LOSSES
+
+        losses = {loss: losses_dict[loss] for loss in actual_losses}
+
+        evaluate_model(load_CC_test, load_test, cfg.TEST_BATCH_SIZE, cfg.N_WORKERS, losses, cfg.DEVICE, cfg.OUT_PREDICTIONS)
