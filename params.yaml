@@ -1,0 +1,9 @@
+stages:
+  evaluate:
+    model_function: 'MobileCount'
+    data_function:
+    bs: 6
+    n_workers: 2
+    losses:
+    device:
+    out_prediction: None
