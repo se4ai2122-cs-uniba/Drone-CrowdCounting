@@ -2,17 +2,28 @@ import torch
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 import os
+from models.CC import CrowdCounter
 from ruamel.yaml import YAML
 from pathlib import Path
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from dataset.visdrone import load_test, cfg_data
-from main import load_CC_test
 from config import cfg
 
 losses_dict = {
     'rmse': lambda x, y: mean_squared_error(x, y, squared=False),
     'mae': mean_absolute_error
     }
+
+
+def load_CC_test():
+
+    """
+    Load CrowdCounter model net for testing mode
+    """
+    cc = CrowdCounter([0], cfg.NET)
+    if cfg.PRE_TRAINED:
+        cc.load(cfg.PRE_TRAINED)
+    return cc
 
 def test_model(
         model,
