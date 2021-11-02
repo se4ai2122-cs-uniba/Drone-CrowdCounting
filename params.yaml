@@ -53,7 +53,7 @@ evaluate:
   LOSSES: [ 'rmse', 'mae' ]
   DEVICE: cpu
   OUT_PREDICTIONS: None
-  model:
-    PRETRAINED: '../exp/05-27_18-12_VisDrone_MobileCount_0.0001__1080x1920/all_ep_16_mae_9.8_rmse_12.8.pth'
-    GPU: [0]
-    NET: 'MobileCount'
+model:
+  PRETRAINED: '../exp/05-27_18-12_VisDrone_MobileCount_0.0001__1080x1920/all_ep_16_mae_9.8_rmse_12.8.pth'
+  GPU: [0]
+  NET: 'MobileCount'
