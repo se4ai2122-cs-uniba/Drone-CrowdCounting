@@ -4,6 +4,10 @@ global:
   DATA_TEST:
     TRAIN: False
     GT_TRANSFORM: False
+  model:
+    PRETRAINED: '../exp/05-27_18-12_VisDrone_MobileCount_0.0001__1080x1920/all_ep_16_mae_9.8_rmse_12.8.pth'
+    GPU: [0]
+    NET: 'MobileCount'
 prepare:
   GAMMA: 3
   FILENAME_LEN: 5
@@ -44,7 +48,6 @@ train:
   VAL_SIZE: 0.2
   VAL_DENSE_START: 1
   VAL_FREQ: 10  # Before __C.VAL_DENSE_START epoches, the freq is set as __C.VAL_FREQ
-#>>>>>>> 1d4f93e507d32de37c0ab3ba81c2c52daeff42f2
 
 #------------------------TEST-----------------------------------------
 evaluate:
@@ -53,7 +56,3 @@ evaluate:
   LOSSES: [ 'rmse', 'mae' ]
   DEVICE: cpu
   OUT_PREDICTIONS: None
-  model:
-    PRETRAINED: '../exp/05-27_18-12_VisDrone_MobileCount_0.0001__1080x1920/all_ep_16_mae_9.8_rmse_12.8.pth'
-    GPU: [0]
-    NET: 'MobileCount'

@@ -235,6 +235,7 @@ def initialize_dynamic_params():
 
     cfg.OPTIM = cfg.OPTIMS[cfg.OPTIM]
     cfg_data.SIZE = eval(cfg_data.SIZE)
+    cfg.PRE_TRAINED = cfg_data.model['PRE_TRAINED']
 
 
 if __name__ == '__main__':
