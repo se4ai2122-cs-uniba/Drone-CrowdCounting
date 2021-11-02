@@ -5,7 +5,7 @@ import os
 from ruamel.yaml import YAML
 from pathlib import Path
 from sklearn.metrics import mean_squared_error, mean_absolute_error
-from dataset.visdrone import load_test
+from dataset.visdrone import load_test, cfg_data
 from main import load_CC_test
 from config import cfg
 
@@ -111,14 +111,14 @@ if __name__ == '__main__':
         cfg.PRE_TRAINED = eval_params['model']['PRETRAINED']
         cfg.N_WORKERS = eval_params['N_WORKERS']
         cfg.TEST_BATCH_SIZE = eval_params['BATCH_SIZE']
-        cfg.DF_PATH = global_params['DATA_TEST_PATH']
+        cfg.DF_PATH = os.path.join(global_params['DATA_PATH'], 'test')
         cfg.DEVICE = eval_params['DEVICE']
         cfg.OUT_PREDICTIONS = eval_params['OUT_PREDICTIONS']
         cfg.LOSSES = eval_params['LOSSES']
-        cfg.SIZE = global_params['SIZE']
+        cfg_data.SIZE = global_params['SIZE']
 
         actual_losses = cfg.LOSSES
 
         losses = {loss: losses_dict[loss] for loss in actual_losses}
 
-        evaluate_model(load_CC_test, load_test, cfg.TEST_BATCH_SIZE, cfg.N_WORKERS, losses, cfg.DEVICE, cfg.OUT_PREDICTIONS)
+        print(evaluate_model(load_CC_test, load_test, cfg.TEST_BATCH_SIZE, cfg.N_WORKERS, losses, cfg.DEVICE, cfg.OUT_PREDICTIONS))

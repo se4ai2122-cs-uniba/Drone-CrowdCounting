@@ -1,32 +1,16 @@
-#<<<<<<< HEAD
-evaluate:
-  BATCH_SIZE: 6
-  N_WORKERS: 4
-  LOSSES: [ 'rmse', 'mae' ]
-  DEVICE: cpu
-  OUT_PREDICTIONS: None
-  model:
-    PRETRAINED: '../exp/05-27_18-12_VisDrone_MobileCount_0.0001__1080x1920/all_ep_16_mae_9.8_rmse_12.8.pth'
-    GPU: 1
-    NET: 'MobileCount'
 global:
-  DATA_TEST_PATH: '../dataset/VisDrone2020-CC/test'
   DATA_PATH: '../dataset/VisDrone2020-CC'
   SIZE: !!python/tuple [540, 960]
   DATA_TEST:
     TRAIN: False
     GT_TRANSFORM: False
-
-#=======
 prepare:
   GAMMA: 3
   FILENAME_LEN: 5
-
 train:
   TRAIN_BATCH_SIZE: 4
   VAL_BATCH_SIZE: 6
   TEST_BATCH_SIZE: 6
-
   N_WORKERS: 2
   DEVICE: 'cuda'  # cpu or cuda
 
@@ -61,3 +45,15 @@ train:
   VAL_DENSE_START: 1
   VAL_FREQ: 10  # Before __C.VAL_DENSE_START epoches, the freq is set as __C.VAL_FREQ
 #>>>>>>> 1d4f93e507d32de37c0ab3ba81c2c52daeff42f2
+
+#------------------------TEST-----------------------------------------
+evaluate:
+  BATCH_SIZE: 6
+  N_WORKERS: 4
+  LOSSES: [ 'rmse', 'mae' ]
+  DEVICE: cpu
+  OUT_PREDICTIONS: None
+  model:
+    PRETRAINED: '../exp/05-27_18-12_VisDrone_MobileCount_0.0001__1080x1920/all_ep_16_mae_9.8_rmse_12.8.pth'
+    GPU: [0]
+    NET: 'MobileCount'
