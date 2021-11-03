@@ -49,8 +49,8 @@ class Trainer:
         self.epoch = 0
         self.score = np.nan
 
-        if cfg.PRE_TRAINED and cfg.PRE_TRAINED != 'None':
-            checkpoint = torch.load(cfg.PRE_TRAINED)
+        if cfg.PRETRAINED and cfg.PRETRAINED != 'None':
+            checkpoint = torch.load(cfg.PRETRAINED)
             try:
                 self.net.load_state_dict(checkpoint['model_state_dict'])
                 self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])

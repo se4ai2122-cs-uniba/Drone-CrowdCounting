@@ -10,7 +10,7 @@ prepare:
 train:
   model:
     # Path of checkpoint or None
-    PRETRAINED: '../exp/train/05-27_18-12_VisDrone_MobileCount_0.0001__1080x1920/all_ep_16_mae_9.8_rmse_12.8.pth'
+    PRETRAINED: None
     GPU: [ 0 ]
     NET: 'MobileCount'
   TRAIN_BATCH_SIZE: 4
@@ -19,7 +19,7 @@ train:
   DEVICE: 'cuda'  # cpu or cuda
 
   # path settings
-  EXP_PATH: '../exp'
+  EXP_PATH: '../exp/train'
   DATASET: 'VisDrone'
   NET: 'MobileCount'
   DETAILS: '_1080x1920_NVS'
