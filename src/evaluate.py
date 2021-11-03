@@ -10,7 +10,7 @@ from dataset.visdrone import load_test, cfg_data
 from config import cfg
 import json
 
-EVAL_FOLDER = '../exp/eval'
+EVAL_FOLDER = 'exp/eval'
 
 
 
@@ -75,14 +75,16 @@ def test_model(
             count_gt = torch.sum(targets.squeeze(), dim=(1, 2))
 
             if out_prediction:
+                j = 0
                 for img in range(predictions.shape[0]):
-                    exp_name = os.path.basename(os.path.join(os.path.dirname(cfg.PRE_TRAINED)))
-                    out_dir = os.path.join(EVAL_FOLDER, exp_name)
-                    Path(out_dir).mkdir(exist_ok=True)
+                    # exp_name = os.path.basename(os.path.join(os.path.dirname(cfg.PRE_TRAINED)))
+                    # out_dir = os.path.join(EVAL_FOLDER, exp_name)
+                    Path(EVAL_FOLDER).mkdir(exist_ok=True)
                     plt.imsave(
-                        os.path.join(out_dir, str(i)) + '.png',
+                        os.path.join(EVAL_FOLDER, str(i*predictions.shape[0] + j)) + '.png',
                         predictions[img].squeeze().cpu().numpy(),
                         cmap='jet', )
+                    j += 1
 
             y_pred.extend(count_pr.cpu().tolist())
             y_true.extend(count_gt.cpu().tolist())
@@ -114,6 +116,7 @@ def evaluate_model(model_function, data_function, bs, n_workers, losses, device=
 
     return results
 
+
 def metrics_saver(path, metrics):
     """
         Writes the metrics dictionary on the file indicated in path
@@ -125,10 +128,10 @@ def metrics_saver(path, metrics):
         json.dump(metrics, fp)
 
 
-
 if __name__ == '__main__':
 
-    params_path = Path("../params.yaml")
+    params_path = Path("params.yaml")
+    Path(EVAL_FOLDER).mkdir(exist_ok=True)
     with open(params_path, 'r') as params_file:
         yaml = YAML()
         params = yaml.load(params_file)
@@ -151,4 +154,4 @@ if __name__ == '__main__':
 
         metrics = evaluate_model(load_CC_test, load_test, cfg.TEST_BATCH_SIZE, cfg.N_WORKERS, losses, cfg.DEVICE, cfg.OUT_PREDICTIONS)
 
-        metrics_saver("../metrics.json", metrics)
+        metrics_saver("metrics.json", metrics)

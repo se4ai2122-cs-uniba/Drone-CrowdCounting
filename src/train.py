@@ -240,7 +240,7 @@ def initialize_dynamic_params():
 
 
 if __name__ == '__main__':
-    params_path = Path("../params.yaml")
+    params_path = Path("params.yaml")
 
     with open(params_path, 'r') as params_file:
         yaml = YAML()

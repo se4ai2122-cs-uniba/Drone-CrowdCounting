@@ -57,7 +57,7 @@ def make_ground_truth(folder, img_folder, params, name_rule, img_rule, dataframe
         size = 'various_sizes'
     raw_path, subset = os.path.split(img_folder)
     data_superpath, _ = os.path.split(raw_path)
-    h5_folder = os.path.join(data_superpath, 'heatmaps' + re.sub(', |\(|\)', '_', str(size)))
+    h5_folder = os.path.join(data_superpath, 'processed', 'heatmaps' + re.sub(', |\(|\)', '_', str(size)))
     h5_folder = os.path.join(h5_folder, subset)
     os.makedirs(h5_folder, exist_ok=True)
     
@@ -118,7 +118,7 @@ if __name__ == '__main__':
     img_test_rule = lambda x, y: os.path.join(x, re.sub('\_test$', '', y))
 
     # Path of the parameters file
-    params_path = Path("../../params.yaml")
+    params_path = Path("params.yaml")
     
     # Read data preparation parameters
     with open(params_path, "r") as params_file:
@@ -133,7 +133,7 @@ if __name__ == '__main__':
     train = [train_rule, img_train_rule, dataframe_load_train, size]
     test = [test_rule, img_test_rule, dataframe_load_test, size]
 
-    dataset_path = os.path.join('../', global_params["DATA_PATH"], 'raw')
+    dataset_path = os.path.join(global_params["DATA_PATH"], 'raw')
 
     print('Generating train heatmaps...\n')
     make_ground_truth(os.path.join(dataset_path, 'annotations'),

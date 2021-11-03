@@ -111,7 +111,7 @@ def make_dataframe(folder, size):
     folders = os.listdir(folder)
     raw_path, subset = os.path.split(folder)
     data_superpath, _ = os.path.split(raw_path)
-    h5_folder = os.path.join(data_superpath, 'heatmaps' + re.sub(', |\(|\)', '_', str(size)), subset)
+    h5_folder = os.path.join(data_superpath, 'processed', 'heatmaps' + re.sub(', |\(|\)', '_', str(size)), subset)
     dataset = []
     for cur_folder in folders:
         files = os.listdir(os.path.join(folder, cur_folder))
