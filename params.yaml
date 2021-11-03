@@ -1,9 +1,6 @@
 global:
-  DATA_PATH: '../dataset/VisDrone2020-CC'
-  SIZE: !!python/tuple [540, 960]
-  DATA_TEST:
-    TRAIN: False
-    GT_TRANSFORM: False
+  DATA_PATH: 'dataset/VisDrone2020-CC'
+  SIZE: [540, 960]
 prepare:
   GAMMA: 3
   FILENAME_LEN: 5
@@ -13,16 +10,16 @@ train:
     PRETRAINED: None
     GPU: [ 0 ]
     NET: 'MobileCount'
-  TRAIN_BATCH_SIZE: 4
+  TRAIN_BATCH_SIZE: 6
   VAL_BATCH_SIZE: 6
   N_WORKERS: 2
   DEVICE: 'cuda'  # cpu or cuda
 
   # path settings
-  EXP_PATH: '../exp/train'
+  EXP_PATH: 'exp/train'
   DATASET: 'VisDrone'
   NET: 'MobileCount'
-  DETAILS: '_1080x1920_NVS'
+  DETAILS: '_dvc_try'
 
   # learning optimizer settings
   LR: 1e-4  # learning rate
@@ -30,7 +27,7 @@ train:
   LR_DECAY: 0.995  # decay rate
   LR_DECAY_START: 0  # when training epoch is more than it, the learning rate will be begin to decay
   NUM_EPOCH_LR_DECAY: 1  # decay frequency
-  MAX_EPOCH: 500
+  MAX_EPOCH: 1
 
   MOMENTUM: 0.95 # Used in SGD
 
@@ -50,7 +47,7 @@ train:
 evaluate:
   model:
     # Path of checkpoint or None
-    PRETRAINED: '../exp/train/05-27_18-12_VisDrone_MobileCount_0.0001__1080x1920/all_ep_16_mae_9.8_rmse_12.8.pth'
+    PRETRAINED: 'exp/train/model.pth'
     GPU: [ 0 ]
     NET: 'MobileCount'
   BATCH_SIZE: 6
