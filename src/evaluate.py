@@ -8,6 +8,7 @@ from pathlib import Path
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from dataset.visdrone import load_test, cfg_data
 from config import cfg
+import json
 
 EVAL_FOLDER = '../exp/eval'
 
@@ -113,6 +114,17 @@ def evaluate_model(model_function, data_function, bs, n_workers, losses, device=
 
     return results
 
+def metrics_saver(path, metrics):
+    """
+        Writes the metrics dictionary on the file indicated in path
+
+        @param path: path of the file were to write the metrics
+        @param metrics: dictionary of the metrics
+    """
+    with open(path, 'w') as fp:
+        json.dump(metrics, fp)
+
+
 
 if __name__ == '__main__':
 
@@ -123,7 +135,7 @@ if __name__ == '__main__':
 
         eval_params = params['evaluate']
         global_params = params['global']
-        cfg.NET, cfg.GPU = eval_params['model']['NET'], global_params['model']['GPU']
+        cfg.NET, cfg.GPU = eval_params['model']['NET'], eval_params['model']['GPU']
         cfg.PRE_TRAINED = eval_params['model']['PRETRAINED']
         cfg.N_WORKERS = eval_params['N_WORKERS']
         cfg.TEST_BATCH_SIZE = eval_params['BATCH_SIZE']
@@ -137,4 +149,6 @@ if __name__ == '__main__':
 
         losses = {loss: losses_dict[loss] for loss in actual_losses}
 
-        print(evaluate_model(load_CC_test, load_test, cfg.TEST_BATCH_SIZE, cfg.N_WORKERS, losses, cfg.DEVICE, cfg.OUT_PREDICTIONS))
+        metrics = evaluate_model(load_CC_test, load_test, cfg.TEST_BATCH_SIZE, cfg.N_WORKERS, losses, cfg.DEVICE, cfg.OUT_PREDICTIONS)
+
+        metrics_saver("../metrics.json", metrics)
