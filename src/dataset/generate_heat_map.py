@@ -53,6 +53,13 @@ def make_ground_truth(folder, img_folder, params, name_rule, img_rule, dataframe
     gamma = params["GAMMA"]
     gt_files = os.listdir(folder)
     gt_files = list(filter(name_rule, gt_files))
+    if size is None:
+        size = 'various_sizes'
+    raw_path, subset = os.path.split(img_folder)
+    data_superpath, _ = os.path.split(raw_path)
+    h5_folder = os.path.join(data_superpath, 'heatmaps' + re.sub(', |\(|\)', '_', str(size)))
+    h5_folder = os.path.join(h5_folder, subset)
+    os.makedirs(h5_folder, exist_ok=True)
     
     for gt in tqdm(gt_files):
         fname, ext = gt.split('.')
@@ -61,19 +68,19 @@ def make_ground_truth(folder, img_folder, params, name_rule, img_rule, dataframe
             os.path.join(seq_folder,
                          list(filter(lambda x: '.jpg' in x, os.listdir(seq_folder)))[0]
                          )).shape[:2]
-
         if size is None:
             size = img_size
         df = dataframe_fun(os.path.join(folder, gt))
         heatmaps = generate_heatmap(df, img_size, size, gamma)
         for heatmap in heatmaps:
+            h5_seq_folder = os.path.join(h5_folder, os.path.split(seq_folder)[1])
+            os.makedirs(h5_seq_folder, exist_ok=True)
             hf = h5py.File(
                 os.path.join(
-                    seq_folder,
-                    (str(heatmap).zfill(filename_len) + re.sub(', |\(|\)', '_', str(size)) + '.h5')), 'w')
+                    h5_seq_folder,
+                    (str(heatmap).zfill(filename_len) + '.h5')), 'w')
             hf.create_dataset('density', data=heatmaps[heatmap])
             hf.close()
-        
 
 
 def dataframe_load_test(filename):
@@ -126,15 +133,17 @@ if __name__ == '__main__':
     train = [train_rule, img_train_rule, dataframe_load_train, size]
     test = [test_rule, img_test_rule, dataframe_load_test, size]
 
-    dataset_path = os.path.join('../',global_params["DATA_PATH"])
+    dataset_path = os.path.join('../', global_params["DATA_PATH"], 'raw')
 
+    print('Generating train heatmaps...\n')
     make_ground_truth(os.path.join(dataset_path, 'annotations'),
                      os.path.join(dataset_path, 'train'),
                      prepare_params,
                      *train)
-    
+
+    print('Generating test heatmaps...\n')
     make_ground_truth(os.path.join(dataset_path, 'annotations'),
                      os.path.join(dataset_path, 'test'),
                      prepare_params,
                      *test)
-    
+    print('Successfully completed!')
