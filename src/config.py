@@ -16,7 +16,6 @@ __C.SIZE = [540, 960]
 __C.LOSSES = ['RMSE', 'MSE']
 __C.TRAIN = False
 __C.GT_TRANSFORM = False
-__C.DF_PATH = '../dataset/VisDrone2020-CC/test'
 
 __C.PRE_TRAINED = '../exp/05-27_18-12_VisDrone_MobileCount_0.0001__1080x1920/all_ep_16_mae_9.8_rmse_12.8.pth'
 __C.OUT_PREDICTIONS = None

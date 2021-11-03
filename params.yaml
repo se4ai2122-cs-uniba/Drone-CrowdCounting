@@ -4,22 +4,19 @@ global:
   DATA_TEST:
     TRAIN: False
     GT_TRANSFORM: False
-  model:
-    PRETRAINED: '../exp/05-27_18-12_VisDrone_MobileCount_0.0001__1080x1920/all_ep_16_mae_9.8_rmse_12.8.pth'
-    GPU: [0]
-    NET: 'MobileCount'
 prepare:
   GAMMA: 3
   FILENAME_LEN: 5
 train:
+  model:
+    # Path of checkpoint or None
+    PRETRAINED: '../exp/train/05-27_18-12_VisDrone_MobileCount_0.0001__1080x1920/all_ep_16_mae_9.8_rmse_12.8.pth'
+    GPU: [ 0 ]
+    NET: 'MobileCount'
   TRAIN_BATCH_SIZE: 4
   VAL_BATCH_SIZE: 6
-  TEST_BATCH_SIZE: 6
   N_WORKERS: 2
   DEVICE: 'cuda'  # cpu or cuda
-
-  # Path of checkpoint or None
-  PRE_TRAINED: '../exp/05-27_18-12_VisDrone_MobileCount_0.0001__1080x1920/all_ep_16_mae_9.8_rmse_12.8.pth'
 
   # path settings
   EXP_PATH: '../exp'
@@ -51,8 +48,13 @@ train:
 
 #------------------------TEST-----------------------------------------
 evaluate:
+  model:
+    # Path of checkpoint or None
+    PRETRAINED: '../exp/train/05-27_18-12_VisDrone_MobileCount_0.0001__1080x1920/all_ep_16_mae_9.8_rmse_12.8.pth'
+    GPU: [ 0 ]
+    NET: 'MobileCount'
   BATCH_SIZE: 6
   N_WORKERS: 4
   LOSSES: [ 'rmse', 'mae' ]
-  DEVICE: cpu
-  OUT_PREDICTIONS: None
+  DEVICE: cuda
+  OUT_PREDICTIONS: True

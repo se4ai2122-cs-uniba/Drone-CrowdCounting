@@ -16,7 +16,7 @@ def load_CC_train():
     """
     Load CrowdCounter model net for training mode
     """
-    cc = CrowdCounter([0], cfg.NET)
+    cc = CrowdCounter(cfg.GPU, cfg.NET)
     return cc
 
 
@@ -225,7 +225,9 @@ def initialize_dynamic_params():
                      'momentum': cfg.MOMENTUM
                 })
     }
-
+    cfg.NET = cfg.model.NET
+    cfg.PRETRAINED = cfg.model.PRETRAINED
+    cfg.GPU = cfg.model.GPU
     now = time.strftime("%m-%d_%H-%M", time.localtime())
     cfg.EXP_NAME = now \
                    + '_' + cfg.DATASET \
@@ -234,8 +236,7 @@ def initialize_dynamic_params():
                    + '_' + cfg.DETAILS
 
     cfg.OPTIM = cfg.OPTIMS[cfg.OPTIM]
-    cfg_data.SIZE = eval(cfg_data.SIZE)
-    cfg.PRE_TRAINED = cfg_data.model['PRE_TRAINED']
+    cfg_data.SIZE = cfg_data.SIZE
 
 
 if __name__ == '__main__':

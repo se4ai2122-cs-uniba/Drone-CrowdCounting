@@ -9,6 +9,10 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 from dataset.visdrone import load_test, cfg_data
 from config import cfg
 
+EVAL_FOLDER = '../exp/eval'
+
+
+
 losses_dict = {
     'rmse': lambda x, y: mean_squared_error(x, y, squared=False),
     'mae': mean_absolute_error
@@ -71,7 +75,8 @@ def test_model(
 
             if out_prediction:
                 for img in range(predictions.shape[0]):
-                    out_dir = os.path.join(os.path.dirname(out_prediction), 'preds')
+                    exp_name = os.path.basename(os.path.join(os.path.dirname(cfg.PRE_TRAINED)))
+                    out_dir = os.path.join(EVAL_FOLDER, exp_name)
                     Path(out_dir).mkdir(exist_ok=True)
                     plt.imsave(
                         os.path.join(out_dir, str(i)) + '.png',
@@ -118,14 +123,14 @@ if __name__ == '__main__':
 
         eval_params = params['evaluate']
         global_params = params['global']
-        cfg.NET, cfg.GPU = eval_params['model']['NET'], eval_params['model']['GPU']
+        cfg.NET, cfg.GPU = eval_params['model']['NET'], global_params['model']['GPU']
         cfg.PRE_TRAINED = eval_params['model']['PRETRAINED']
         cfg.N_WORKERS = eval_params['N_WORKERS']
         cfg.TEST_BATCH_SIZE = eval_params['BATCH_SIZE']
-        cfg.DF_PATH = os.path.join(global_params['DATA_PATH'], 'test')
         cfg.DEVICE = eval_params['DEVICE']
         cfg.OUT_PREDICTIONS = eval_params['OUT_PREDICTIONS']
         cfg.LOSSES = eval_params['LOSSES']
+        cfg_data.DATA_PATH = global_params['DATA_PATH']
         cfg_data.SIZE = global_params['SIZE']
 
         actual_losses = cfg.LOSSES
