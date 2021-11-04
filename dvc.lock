@@ -8,8 +8,8 @@ stages:
       size: 13941473280
       nfiles: 3360
     - path: exp/train
-      md5: 8594d0a4d0161cc1da3eee7cf843a8c1.dir
-      size: 41135883
+      md5: 8e247883947379035116637cfe6f2537.dir
+      size: 41135812
       nfiles: 3
     - path: src/dataset/visdrone.py
       md5: 9b2101f75d0075ba93fa0166442c4538
@@ -32,12 +32,12 @@ stages:
         - 960
     outs:
     - path: exp/eval
-      md5: 8a00047576719ad40d2bc64730a2724b.dir
-      size: 176791457
+      md5: 82b96ad111edcf9f3d4207828623b2d4.dir
+      size: 93632730
       nfiles: 900
     - path: metrics.json
-      md5: a272079ba77cc9b80b1f2d3120907dec
-      size: 54
+      md5: ed59510ef682f1b43bfcee6b2665c378
+      size: 53
   prepare:
     cmd: python src/dataset/generate_heat_map.py
     deps:
@@ -90,7 +90,7 @@ stages:
         - 960
         train.DETAILS: _dvc_try
         train.EARLY_STOP_DELTA: 0.01
-        train.LR: 0.0001
+        train.LR: 0.001
         train.LR_DECAY: 0.995
         train.LR_DECAY_START: 0
         train.MAX_EPOCH: 1
@@ -108,6 +108,6 @@ stages:
         train.model.PRETRAINED: None
     outs:
     - path: exp/train
-      md5: 8594d0a4d0161cc1da3eee7cf843a8c1.dir
-      size: 41135883
+      md5: 8e247883947379035116637cfe6f2537.dir
+      size: 41135812
       nfiles: 3
