@@ -3,10 +3,10 @@ name: Testing
 on:
   push:
     branches-ignore:
-      - main
+      - action
   pull_request:
     branches-ignore:
-      - main
+      - action
 jobs:
 
   build:
@@ -37,6 +37,6 @@ jobs:
     - name: Generate Report
       run: |
         pip install pytest pytest-cov 
-        PYTHONPATH='src' pytest --cov src/tests/ --cov-report=xml
+        PYTHONPATH='src' pytest --cov src/tests/ -m "not gpu" --cov-report=xml
     - name: Codecov
       uses: codecov/codecov-action@v2.1.0
