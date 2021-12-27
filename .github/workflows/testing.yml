@@ -33,10 +33,6 @@ jobs:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS }}
       run: |
         dvc pull exp/model.pth
-        
-    - name: open server
-      run: |
-        python src/api.py
     - name: Generate Report
       run: |
         pip install pytest pytest-cov 
