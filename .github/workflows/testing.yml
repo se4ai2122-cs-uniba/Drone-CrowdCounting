@@ -32,7 +32,7 @@ jobs:
       env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS }}
       run: |
-        dvc pull exp/model.pth
+        dvc pull
     - name: Generate Report
       run: |
         pip install pytest pytest-cov 
