@@ -36,6 +36,6 @@ jobs:
     - name: Generate Report
       run: |
         pip install pytest pytest-cov 
-        PYTHONPATH='src' pytest --cov src tests/ -m "not cuda" --cov-report=xml
+        PYTHONPATH='src' pytest tests/ -m "not (cuda or slow)"
     - name: Codecov
       uses: codecov/codecov-action@v2.1.0
