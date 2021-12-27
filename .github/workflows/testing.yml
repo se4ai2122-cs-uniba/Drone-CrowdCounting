@@ -33,12 +33,9 @@ jobs:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS }}
       run: |
         dvc pull exp/model.pth
-    - name: Install ffmpeg
-      run: |
-        apt-get install ffmpeg libsm6 libxext6
     - name: Generate Report
       run: |
         pip install pytest pytest-cov 
-        PYTHONPATH='src' pytest tests/ -m "not (cuda or slow)"
+        PYTHONPATH='src' pytest --cov src tests/ -m "not (cuda or video)" --cov-report=xml
     - name: Codecov
       uses: codecov/codecov-action@v2.1.0
