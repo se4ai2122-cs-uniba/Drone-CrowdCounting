@@ -33,6 +33,9 @@ jobs:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS }}
       run: |
         dvc pull exp/model.pth
+    - name: Install ffmpeg
+      run: |
+        apt-get install ffmpeg libsm6 libxext6
     - name: Generate Report
       run: |
         pip install pytest pytest-cov 
