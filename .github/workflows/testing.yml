@@ -36,6 +36,6 @@ jobs:
     - name: Generate Report
       run: |
         pip install pytest pytest-cov 
-        PYTHONPATH='src' pytest --cov src tests/ -m "not (cuda or video)" --cov-report=xml
+        PYTHONPATH='src' pytest --cov src tests/ -m "not (cuda or video or h5)" --cov-report=xml
     - name: Codecov
       uses: codecov/codecov-action@v2.1.0
