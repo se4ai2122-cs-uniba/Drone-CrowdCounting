@@ -1,12 +1,9 @@
 name: Testing
 
 on:
-  push:
-    branches-ignore:
-      - action
   pull_request:
-    branches-ignore:
-      - action
+    branches: [ main ]
+  workflow_dispatch:
 jobs:
 
   build:
